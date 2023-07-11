@@ -67,7 +67,6 @@ const deleteProductById = async (id) => {
     return await Product.findByIdAndRemove(id);
   };
 
-
 const deleteMultipleProducts = async (ids) => {
     return await Product.deleteMany({ _id: { $in: ids } });
   };

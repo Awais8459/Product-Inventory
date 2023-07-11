@@ -30,9 +30,9 @@ const createProducts = async (req, res) => {
   }
 };
 
-const updateProduct = async (req, res) => {
+const updateProductById = async (req, res) => {
   try {
-    const product = await productService.updateProduct(req.params.id, req.body);
+    const product = await productService.updateProductById(req.params.id, req.body);
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
@@ -67,7 +67,7 @@ const deleteMultipleProducts = async (req, res) => {
     createProducts,
     getProducts,
     getProductById,
-    updateProduct,
+    updateProductById,
     deleteProduct,
     deleteMultipleProducts,
   };

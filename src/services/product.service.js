@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
-const { Product } = require('../models');
+const  { Product }  = require('../models');
 /**
  * Create a product
  * @param {Object} productBody
@@ -27,14 +27,16 @@ const queryProducts = async (filter, options) => {
   const products = await product.paginate(filter, options);
   return products;
 };
-
+const getProducts = async () => {
+    return await Product.find();
+  };
 /**
  * Get product by id
  * @param {ObjectId} id
  * @returns {Promise<product>}
  */
 
-const getProductById = async (id) => {
+const getProductsByID = async (id) => {
     return await Product.findById(id);
   };
   
@@ -69,15 +71,14 @@ const deleteProductById = async (id) => {
 const deleteMultipleProducts = async (ids) => {
     return await Product.deleteMany({ _id: { $in: ids } });
   };
-  
-  
-  
+
 
 module.exports = {
   createProduct,
   createProducts,
   queryProducts,
-  getProductById,
+  getProductsByID,
+  getProducts,
   updateProductById,
   deleteProductById,
   deleteMultipleProducts,

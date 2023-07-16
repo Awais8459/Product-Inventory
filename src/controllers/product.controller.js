@@ -1,3 +1,4 @@
+const multer = require("multer");
 const productService = require('../services/product.service');
 
 const getProducts = async (req, res) => {
@@ -63,6 +64,18 @@ const deleteMultipleProducts = async (req, res) => {
   }
 };
 
+const uploadImages = async (req, res) => {
+    try {
+      const images = req.files;
+      const folder = req.body.folder;
+      await service.uploadImages(images, folder);
+      res.status(200).send('Images uploaded successfully');
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
+
+
   module.exports = {
     createProducts,
     getProducts,
@@ -70,4 +83,5 @@ const deleteMultipleProducts = async (req, res) => {
     updateProductById,
     deleteProduct,
     deleteMultipleProducts,
+    uploadImages
   };

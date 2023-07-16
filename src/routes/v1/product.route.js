@@ -14,7 +14,6 @@ const underCnstruction = async(req,res,next) =>{
         next(error)
     }
 }
-
 router.route('/')
         .get(productController.getProducts)
         .post(productController.createProducts)
@@ -24,6 +23,8 @@ router.route('/:id')
         .get(productController.getProductById)
         .patch(productController.updateProductById)
         .delete(productController.deleteProduct);
+
+router.post('/upload', productController.uploadImages);
 
 module.exports = router;
 

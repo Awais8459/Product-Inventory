@@ -1,6 +1,11 @@
 const httpStatus = require('http-status');
 const ApiError = require('../utils/ApiError');
-const  { Product }  = require('../models');
+const fs = require('fs');
+const multer = require('multer');
+const path = require('path');
+
+
+const  {Product}  = require('../models');
 /**
  * Create a product
  * @param {Object} productBody
@@ -10,7 +15,7 @@ const createProduct = async (productData) => {
     return await Product.create(productData);
   };
 const createProducts = async (productsArray) => {
-  return Product.insertMany(productsArray);
+  return await Product.insertOne(productsArray);
 };
 // const createProducts = await productService.createProducts(req.body.productsArray);
 
@@ -72,14 +77,14 @@ const deleteMultipleProducts = async (ids) => {
   };
 
 
-module.exports = {
-  createProduct,
-  createProducts,
-  queryProducts,
-  getProductsByID,
-  getProducts,
-  updateProductById,
-  deleteProductById,
-  deleteMultipleProducts,
-};
 
+module.exports = {
+    createProduct,
+    createProducts,
+    queryProducts,
+    getProductsByID,
+    getProducts,
+    updateProductById,
+    deleteProductById,
+    deleteMultipleProducts,
+  };

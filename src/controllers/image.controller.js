@@ -5,7 +5,7 @@ const uploadImage = async (req, res) => {
   try {
     const { parentId } = req.params;
     const { filename, originalname } = req.file;
-    const imageUrl = `http://localhost:3000/v1/images/upload/${filename}`;
+    const imageUrl = `http://localhost:3000/v1/images/view/${filename}`;
 
     const image = await imageService.uploadImage(originalname, parentId, imageUrl);
     res.status(201).json({ image });
@@ -14,5 +14,15 @@ const uploadImage = async (req, res) => {
     res.status(500).json({ error: 'Failed to upload image' });
   }
 };
+const viewImage = (req, res) => {
+    try {
+      const imageName = req.params.imageName;
+      const imagePath = path.join(__dirname, `../../public/uploads/${imageName}`);
+      res.sendFile(imagePath);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to view image' });
+    }
+  };
 
-module.exports = { uploadImage };
+module.exports = { uploadImage, viewImage };

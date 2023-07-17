@@ -15,5 +15,5 @@ const upload = multer({ storage });
 
 // Define the route for uploading an image
 router.post("/upload/:parentId", upload.single('image'), imageController.uploadImage);
-
+router.get("/view/:imageName", imageController.viewImage);
 module.exports = router;

@@ -7,7 +7,6 @@ const config = require('../../config/config');
 const folderRoute = require('./folder.route')
 const imageRoute = require('./image.route')
 
-
 const router = express.Router();
 
 const defaultRoutes = [

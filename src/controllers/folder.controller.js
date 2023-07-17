@@ -29,7 +29,8 @@ const path = require("path");
     try {
       const { folderId } = req.params;
       await folderService.deleteFolder(folderId);
-      res.sendStatus(204);
+      // res.sendStatus(204);
+      res.status(200).json({ message: 'Folder successfully deleted' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Failed to delete folder' });

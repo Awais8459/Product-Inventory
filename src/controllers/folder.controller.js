@@ -13,17 +13,6 @@ const path = require("path");
     }
   };
 
-  // exports.createFolder = async (req, res) => {
-  //   try {
-  //     const { name , parent_list } = req.body;
-  //     const folder = await folderService.createFolder(name, parent_list);
-  //     res.status(201).json({ folder });
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).json({ error: 'Failed to create folder' });
-  //   }
-  // };
-
  exports.uploadFolder = async (req, res) => {
     try {
       const { parentId } = req.params;
@@ -35,18 +24,15 @@ const path = require("path");
       res.status(500).json({ error: 'Failed to upload folder' });
     }
   };
-//
-// exports.uploadImage = async (req, res) => {
-//   try {
-//     const { parentId } = req.params;
-//     const { originalname, filename } = req.file;
-//     const imageUrl = `${req.protocol}://${req.get("host")}/public/upload/${filename}`;
-//     const image = await folderService.uploadImage(originalname, parentId, imageUrl);
-//     res.status(201).json({ image });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Failed to upload image' });
-//   }
-// };
-//
+
+  exports.deleteFolder = async (req, res) => {
+    try {
+      const { folderId } = req.params;
+      await folderService.deleteFolder(folderId);
+      res.sendStatus(204);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to delete folder' });
+    }
+  };
 

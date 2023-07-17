@@ -25,4 +25,15 @@ const viewImage = (req, res) => {
     }
   };
 
-module.exports = { uploadImage, viewImage };
+  const deleteImage = async (req, res) => {
+    try {
+      const imageId = req.params.imageId;
+      await imageService.deleteImage(imageId);
+      res.status(200).json({ message: 'Image deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to delete image' });
+    }
+  };
+
+module.exports = { uploadImage, viewImage, deleteImage };

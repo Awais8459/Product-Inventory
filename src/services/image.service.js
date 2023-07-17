@@ -15,3 +15,8 @@ exports.uploadImage = async (name, parentId, imageUrl) => {
 
   return await image.save();
 };
+
+exports.deleteImage = async (imageId) => {
+  return await Image.findByIdAndDelete(imageId);
+};
+

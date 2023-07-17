@@ -9,6 +9,6 @@ const upload = multer({ dest: "public/uploads/" }); // Destination folder for up
 router.post("/", folderController.createFolder); // Create a new folder at the root level
 router.post("/upload/:parentId", folderController.uploadFolder); // Upload a new folder inside an existing folder
 //
-router.post("/uploadImage/:parentId", upload.single("image"), folderController.uploadImage); // Upload a new image inside an existing folder
+// router.post("/uploadImage/:parentId", upload.single("image"), folderController.uploadImage); // Upload a new image inside an existing folder
 //
 module.exports = router;

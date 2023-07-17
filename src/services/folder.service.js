@@ -37,6 +37,11 @@ exports.deleteFolder = async (folderId) => {
     await deleteFolderAndChildren(childFolder._id);
   }
 
+  const imagesToDelete = await Image.find({ parent_list: folderId });
+  for (const image of imagesToDelete) {
+    await Image.findByIdAndDelete(image._id);
+  }
+
   // Delete the current folder
   await Folder.findByIdAndDelete(folderId);
 

@@ -1,19 +1,27 @@
 const imageService = require('../services/image.service');
 const path = require('path');
 
-const uploadImage = async (req, res) => {
+const uploadImages = async (req, res) => {
   try {
     const { parentId } = req.params;
-    const { filename, originalname } = req.file;
-    const imageUrl = `http://localhost:3000/v1/images/view/${filename}`;
+    const files = req.files;
+    const imageUrls = [];
 
-    const image = await imageService.uploadImage(originalname, parentId, imageUrl);
-    res.status(201).json({ image });
+    for (const file of files) {
+      const { filename, originalname } = file;
+      const imageUrl = `http://localhost:3000/v1/images/view/${filename}`;
+
+      const image = await imageService.uploadImage(originalname, parentId, imageUrl);
+      imageUrls.push(image.imageUrl);
+    }
+
+    res.status(201).json({ imageUrls });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Failed to upload image' });
+    res.status(500).json({ error: 'Failed to upload images' });
   }
 };
+
 const viewImage = (req, res) => {
     try {
       const imageName = req.params.imageName;
@@ -36,4 +44,4 @@ const viewImage = (req, res) => {
     }
   };
 
-module.exports = { uploadImage, viewImage, deleteImage };
+module.exports = { uploadImages, viewImage, deleteImage };

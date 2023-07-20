@@ -6,7 +6,10 @@ const path = require("path");
     try {
       const { name , parentIdList } = req.body;
       const folder = await folderService.createFolder(name, parentIdList);
-      res.status(201).json({ folder });
+
+      const { images, ...folderWithoutImages } = folder.toObject();
+
+      res.status(201).json({ folder: folderWithoutImages });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Failed to create folder' });
@@ -18,7 +21,10 @@ const path = require("path");
       const { parentId } = req.params;
       const { name } = req.body;
       const folder = await folderService.uploadFolder(name, parentId);
-      res.status(201).json({ folder });
+
+      const { images, ...folderWithoutImages } = folder.toObject();
+
+      res.status(201).json({ folder: folderWithoutImages });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Failed to upload folder' });

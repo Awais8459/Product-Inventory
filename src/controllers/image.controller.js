@@ -6,16 +6,28 @@ const uploadImages = async (req, res) => {
     const { parentId } = req.params;
     const files = req.files;
     const imageUrls = [];
+    const imageDetails = [];
 
     for (const file of files) {
       const { filename, originalname } = file;
       const imageUrl = `http://localhost:3000/v1/images/view/${filename}`;
 
       const image = await imageService.uploadImage(originalname, parentId, imageUrl);
-      imageUrls.push(image.imageUrl);
+      // imageUrls.push(image.imageUrl);
+
+      const imageInfo = {
+        id: image._id, 
+        name: image.name,
+        parent: image.parent,
+        parent_list: image.parent_list,
+        imageUrl: image.imageUrl
+      };
+
+      imageDetails.push(imageInfo)
     }
 
-    res.status(201).json({ imageUrls });
+    // res.status(201).json({ imageUrls });
+    res.status(201).json(imageDetails)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to upload images' });

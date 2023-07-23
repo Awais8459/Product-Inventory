@@ -3,3 +3,4 @@ module.exports.userController = require('./user.controller');
 module.exports.productController = require('./product.controller');
 module.exports.folderController = require('./folder.controller')
 module.exports.imageController = require('./image.controller')
+module.exports.uploadController = require('./upload.controller')

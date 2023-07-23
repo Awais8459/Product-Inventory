@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const imageController = require('../../controllers/image.controller');
+
 const multer = require('multer');
 
 // Multer storage configuration

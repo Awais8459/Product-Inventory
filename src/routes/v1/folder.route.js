@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const folderController = require('../../controllers/folder.controller');
+const auth = require('../../middlewares/auth');;
 
 // Define the routes for creating and uploading folders
 router.post("/", folderController.createFolder); // Create a new folder at the root level

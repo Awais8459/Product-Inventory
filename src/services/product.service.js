@@ -12,12 +12,12 @@ const  {Product}  = require('../models');
  * @returns {Promise<product>}
  */
 const createProduct = async (productData) => {
-    return await Product.create(productData);
-  };
-const createProducts = async (productsArray) => {
-  return await Product.insertOne(productsArray);
+  return await Product.create(productData);
 };
-// const createProducts = await productService.createProducts(req.body.productsArray);
+
+const createProducts = async (productsArray) => {
+  return await Product.insertMany(productsArray);
+};
 
 /**
  * Query for products

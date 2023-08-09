@@ -17,6 +17,7 @@ const underCnstruction = async(req,res,next) =>{
 router.route('/')
         .get(productController.getProducts)
         .post(productController.createProducts)
+        .put(productController.createProduct)
         .delete(productController.deleteMultipleProducts);
 
 router.route('/:id')

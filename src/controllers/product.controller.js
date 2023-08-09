@@ -22,6 +22,20 @@ const getProductById = async (req, res) => {
   }
 };
 
+const createProduct = async (req, res) => {
+  try {
+    const product = await productService.createProduct(req.body);
+    res.status(201).json(product);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  createProduct,
+};
+
+
 const createProducts = async (req, res) => {
   try {
     const product = await productService.createProducts(req.body.productsArray);
@@ -77,6 +91,7 @@ const uploadImages = async (req, res) => {
 
 
   module.exports = {
+    createProduct,
     createProducts,
     getProducts,
     getProductById,

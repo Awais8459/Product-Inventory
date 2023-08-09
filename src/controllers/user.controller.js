@@ -31,7 +31,20 @@ const updateUser = catchAsync(async (req, res) => {
 
 const deleteUser = catchAsync(async (req, res) => {
   await userService.deleteUserById(req.params.userId);
-  res.status(httpStatus.NO_CONTENT).send();
+  // res.status(httpStatus.NO_CONTENT).send();
+  res.status(200).json({ message: 'User successfully deleted' });
+});
+
+const getUserLocationsByRole = catchAsync(async (req, res) => {
+  const { role } = req.params;
+  const locations = await userService.getUserLocationsByRole(role);
+  res.status(httpStatus.OK).send(locations);
+});
+
+const getUserLocationByRoleAndUserId = catchAsync(async (req, res) => {
+  const { role, userId } = req.params;
+  const location = await userService.getUserLocationByRoleAndUserId(role, userId);
+  res.status(httpStatus.OK).send(location);
 });
 
 module.exports = {
@@ -40,4 +53,6 @@ module.exports = {
   getUser,
   updateUser,
   deleteUser,
+  getUserLocationsByRole,
+  getUserLocationByRoleAndUserId
 };

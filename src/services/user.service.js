@@ -77,6 +77,20 @@ const deleteUserById = async (userId) => {
   }
   await user.remove();
   return user;
+
+};
+
+const getUserLocationsByRole = async (role) => {
+  const users = await User.find({ role });
+  const locations = users.map(user => user.location);
+  return locations;
+};
+const getUserLocationByRoleAndUserId = async (role, userId) => {
+  const user = await User.findOne({ role, _id: userId });
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  return user.location;
 };
 
 module.exports = {
@@ -86,4 +100,6 @@ module.exports = {
   getUserByEmail,
   updateUserById,
   deleteUserById,
+  getUserLocationsByRole,
+  getUserLocationByRoleAndUserId
 };

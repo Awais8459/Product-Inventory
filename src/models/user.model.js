@@ -44,7 +44,23 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point',
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
   },
+  
   {
     timestamps: true,
   }
@@ -86,6 +102,8 @@ userSchema.pre('save', async function (next) {
 /**
  * @typedef User
  */
+// Index the 'location' field for geospatial queries
+userSchema.index({ location: '2dsphere' });
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;

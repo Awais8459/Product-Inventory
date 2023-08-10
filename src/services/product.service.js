@@ -41,7 +41,7 @@ const getProducts = async () => {
  * @returns {Promise<product>}
  */
 
-const getProductsByID = async (id) => {
+const getProductsById = async (id) => {
     return await Product.findById(id);
   };
   
@@ -76,15 +76,20 @@ const deleteMultipleProducts = async (ids) => {
     return await Product.deleteMany({ _id: { $in: ids } });
   };
 
+  const getProductsByCategory = async (categoryName) => {
+    return await Product.find({ category: categoryName }).exec();
+  };
+  
 
 
 module.exports = {
     createProduct,
     createProducts,
     queryProducts,
-    getProductsByID,
+    getProductsById,
     getProducts,
     updateProductById,
     deleteProductById,
     deleteMultipleProducts,
+    getProductsByCategory
   };

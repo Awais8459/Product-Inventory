@@ -24,6 +24,10 @@ router.route('/:id')
         .get(productController.getProductById)
         .patch(productController.updateProductById)
         .delete(productController.deleteProduct);
+        
+router.route('/category/:categoryName').get(productController.getProductsByCategory);
+
+
 
 router.post('/upload', productController.uploadImages);
 

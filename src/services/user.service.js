@@ -33,9 +33,11 @@ const queryUsers = async (filter, options) => {
  * @param {ObjectId} id
  * @returns {Promise<User>}
  */
-const getUserById = async (id) => {
-  return User.findById(id);
+const getUserById = async (userId) => {
+  return User.findById(userId).select('name role location id'); // Include 'location' field
 };
+
+
 
 /**
  * Get user by email
@@ -82,7 +84,11 @@ const deleteUserById = async (userId) => {
 
 const getUserLocationsByRole = async (role) => {
   const users = await User.find({ role });
-  const locations = users.map(user => user.location);
+  const locations = users.map(user=>({
+    id: user._id,
+    name: user.name,
+    location: user.location
+  }));
   return locations;
 };
 const getUserLocationByRoleAndUserId = async (role, userId) => {
@@ -90,8 +96,70 @@ const getUserLocationByRoleAndUserId = async (role, userId) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  return user.location;
+  const userLocation = {
+    id: user._id,
+    name: user.name,
+    location: user.location
+  };
+  return userLocation
 };
+
+const getUsersByRole = async (role) => {
+  const users = await User.find({ role });
+  return users;
+};
+
+// const findNearbyUsers = async (coordinates, maxDistance, role)=> {
+//   try {
+//     const users = await User.aggregate([
+//       {
+//         $geoNear: {
+//           near: {
+//             type: 'Point',
+//             coordinates,
+//           },
+//           distanceField: 'distance',
+//           maxDistance,
+//           query: {
+//             role,
+//           },
+//           spherical: true,
+//         },
+//       },
+//     ]);
+
+//     return users;
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+const findNearbyUsers = async (coordinates, maxDistance, role) => {
+  try {
+    const users = await User.aggregate([
+      {
+        $match: {
+          role: role
+        }
+      },
+      {
+        $geoNear: {
+          near: {
+            type: 'Point',
+            coordinates,
+          },
+          distanceField: 'distance',
+          maxDistance,
+          spherical: true,
+        },
+      },
+    ]);
+
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 module.exports = {
   createUser,
@@ -101,5 +169,7 @@ module.exports = {
   updateUserById,
   deleteUserById,
   getUserLocationsByRole,
-  getUserLocationByRoleAndUserId
+  getUserLocationByRoleAndUserId,
+  getUsersByRole,
+  findNearbyUsers
 };

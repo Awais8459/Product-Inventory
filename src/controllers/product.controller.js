@@ -1,5 +1,6 @@
 const multer = require("multer");
 const productService = require('../services/product.service');
+const catchAsync = require('../utils/catchAsync');
 
 const getProducts = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ const getProducts = async (req, res) => {
 
 const getProductById = async (req, res) => {
   try {
-    const product = await productService.getProductById(req.params.id);
+    const product = await productService.getProductsById(req.params.id)
     if (!product) {
       return res.status(404).json({ error: 'Product not found' });
     }
@@ -90,6 +91,17 @@ const uploadImages = async (req, res) => {
   };
 
 
+  const getProductsByCategory = async (req, res) => {
+    try {
+      const categoryName = req.params.categoryName;
+      const products = await productService.getProductsByCategory(categoryName);
+      res.status(200).json(products);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
+
   module.exports = {
     createProduct,
     createProducts,
@@ -98,5 +110,6 @@ const uploadImages = async (req, res) => {
     updateProductById,
     deleteProduct,
     deleteMultipleProducts,
-    uploadImages
+    uploadImages,
+    getProductsByCategory
   };

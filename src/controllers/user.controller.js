@@ -178,12 +178,12 @@ const calculateDistance = catchAsync(async (req, res) => {
 const findNearbyUsers = async (req, res) => {
   try {
     const { latitude, longitude, maxDistance, role } = req.params;
-    const coordinates = [parseFloat(longitude), parseFloat(latitude)];
+    const coordinates = [parseFloat(latitude), parseFloat(longitude)];
 
     const users = await userService.findNearbyUsers(
       coordinates,
-      parseFloat(maxDistance), // Make sure to pass distance in meters
-      role
+      parseFloat(maxDistance),
+      role,
     );
 
     res.json(users);

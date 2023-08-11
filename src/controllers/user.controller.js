@@ -155,20 +155,6 @@ const calculateDistance = catchAsync(async (req, res) => {
   }
 });
 
-// const findNearbyUsers = async(req, res)=> {
-//   try {
-//     const { latitude, longitude, maxDistance, role } = req.params;
-//     const coordinates = [parseFloat(longitude), parseFloat(latitude)];
-
-//     const users = await userService.findNearbyUsers(coordinates, parseFloat(maxDistance), role);
-
-//     res.json(users);
-//   } catch (error) {
-//     res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
-//   }
-// }
-
-
 const findNearbyUsers = async (req, res) => {
   try {
     const { latitude, longitude, maxDistance, role } = req.params;
@@ -182,10 +168,41 @@ const findNearbyUsers = async (req, res) => {
 
     res.json(users);
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error('Error fetching nearby users:', error); // Log the detailed error
     res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
   }
 };
+
+const findNearbyRiders = async (req, res) => {
+  try {
+    const currentUser = req.user; // Assuming the authenticated user is making the request
+    const nearbyRiders = await userService.findNearbyUsers(currentUser.location.coordinates, 'rider');
+    res.status(200).json(nearbyRiders);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const findNearbyRetailers = async (req, res) => {
+  try {
+    const currentUser = req.user;
+    const nearbyRetailers = await userService.findNearbyUsers(currentUser.location.coordinates, 'retailer');
+    res.status(200).json(nearbyRetailers);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+const findNearbyCustomers = async (req, res) => {
+  try {
+    const currentUser = req.user;
+    const nearbyCustomers = await userService.findNearbyUsers(currentUser.location.coordinates, 'customer');
+    res.status(200).json(nearbyCustomers);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
 
 
 module.exports = {
@@ -198,5 +215,8 @@ module.exports = {
   getUserLocationByRoleAndUserId,
   getUsersByRole,
   calculateDistance,
-  findNearbyUsers
+  findNearbyUsers,
+  findNearbyRiders,
+  findNearbyRetailers,
+  findNearbyCustomers
 };

@@ -23,13 +23,18 @@ router
   // .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
   .delete(userController.deleteUser);
 
-
+  
   router.get('/:role/locations', userController.getUserLocationsByRole);
   router.get('/:role/:userId/location', userController.getUserLocationByRoleAndUserId);
 
   router.route('/role/calculate-distance').get(userController.calculateDistance);
 
-  router.get('/nearby/:latitude/:longitude/:maxDistance/:role', userController.findNearbyUsers);
+router.route('/:role/:latitude/:longitude/:maxDistance/').get(userController.findNearbyUsers);
+  
+
+  router.get('/nearby-riders', userController.findNearbyRiders);
+  router.get('/nearby-retailers', userController.findNearbyRetailers);
+  router.get('/nearby-customers',  userController.findNearbyCustomers);
 
   router.get('/')
 

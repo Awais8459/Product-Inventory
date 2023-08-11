@@ -109,38 +109,9 @@ const getUsersByRole = async (role) => {
   return users;
 };
 
-// const findNearbyUsers = async (coordinates, maxDistance, role)=> {
-//   try {
-//     const users = await User.aggregate([
-//       {
-//         $geoNear: {
-//           near: {
-//             type: 'Point',
-//             coordinates,
-//           },
-//           distanceField: 'distance',
-//           maxDistance,
-//           query: {
-//             role,
-//           },
-//           spherical: true,
-//         },
-//       },
-//     ]);
-
-//     return users;
-//   } catch (error) {
-//     throw error;
-//   }
-// }
 const findNearbyUsers = async (coordinates, maxDistance, role) => {
   try {
     const users = await User.aggregate([
-      {
-        $match: {
-          role: role
-        }
-      },
       {
         $geoNear: {
           near: {
@@ -152,13 +123,44 @@ const findNearbyUsers = async (coordinates, maxDistance, role) => {
           spherical: true,
         },
       },
+      {
+        $match: {
+          role: role
+        }
+      },
     ]);
 
     return users;
   } catch (error) {
+    console.error('Error in findNearbyUsers service:', error);
     throw error;
   }
 };
+
+
+
+// exports.findNearbyUsers = async (coordinates, role) => {
+//   const nearbyUsers = await User.aggregate([
+//     {
+//       $geoNear: {
+//         near: {
+//           type: 'Point',
+//           coordinates: coordinates,
+//         },
+//         distanceField: 'distance',
+//         maxDistance: 10000, // 10 kilometers
+//         query: {
+//           role: role,
+//         },
+//         spherical: true,
+//       },
+//     },
+//   ]);
+
+//   return nearbyUsers;
+// };
+
+
 
 
 module.exports = {

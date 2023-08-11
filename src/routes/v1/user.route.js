@@ -25,11 +25,6 @@ router.get('/:role/locations', userController.getUserLocationsByRole);
 router.get('/:role/:userId/location', userController.getUserLocationByRoleAndUserId);
 router.route('/role/calculate-distance').get(userController.calculateDistance);
 router.route('/:role/:latitude/:longitude/:maxDistance/').get(userController.findNearbyUsers);
-  
-
-  // router.get('/nearby-riders', userController.findNearbyRiders);
-  // router.get('/nearby-retailers', userController.findNearbyRetailers);
-  // router.get('/nearby-customers',  userController.findNearbyCustomers);
 
   router.get('/')
 

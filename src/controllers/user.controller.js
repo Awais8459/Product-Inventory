@@ -155,6 +155,24 @@ const calculateDistance = catchAsync(async (req, res) => {
   }
 });
 
+// const findNearbyUsers = async (req, res) => {
+//   try {
+//     const { latitude, longitude, maxDistance, role } = req.params;
+//     const coordinates = [parseFloat(latitude), parseFloat(longitude)];
+
+//     const users = await userService.findNearbyUsers(
+//       coordinates,
+//       parseFloat(maxDistance),
+//       role,
+//     );
+
+//     res.json(users);
+//   } catch (error) {
+//     console.error('Error fetching nearby users:', error);
+//     res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
+//   }
+// };
+
 const findNearbyUsers = async (req, res) => {
   try {
     const { latitude, longitude, maxDistance, role } = req.params;
@@ -165,11 +183,19 @@ const findNearbyUsers = async (req, res) => {
       parseFloat(maxDistance),
       role,
     );
+    // Customize the response to include only specific fields
+    const simplifiedUsers = users.map(user => ({
+      role: user.role,
+      name: user.name,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      distance: user.distance,
+    }));
 
-    res.json(users);
+    res.json(simplifiedUsers);
   } catch (error) {
     console.error('Error fetching nearby users:', error);
-    res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
+    res.status(500).json({ error: 'No user available' });
   }
 };
 

@@ -109,32 +109,37 @@ const getUsersByRole = async (role) => {
   return users;
 };
 
+// const findNearbyUsers = async (coordinates, maxDistance, role) => {
+//   try {
+//     const users = await User.aggregate([
+//       {
+//         $geoNear: {
+//           near: {
+//             type: 'Point',
+//             coordinates,
+//           },
+//           distanceField: 'distance',
+//           maxDistance,
+//           spherical: true,
+//         },
+//       },
+//       {
+//         $match: {
+//           role: role
+//         }
+//       },
+//     ]);
+
+//     return users;
+//   } catch (error) {
+//     console.error('Error in findNearbyUsers service:', error);
+//     throw error;
+//   }
+// };
+
 const findNearbyUsers = async (coordinates, maxDistance, role) => {
   try {
-    // const users = await User.aggregate([
-    //   {
-    //     $geoNear: {
-    //       near: {
-    //         type: 'Point',
-    //         coordinates,
-    //       },
-    //       distanceField: 'distance',
-    //       maxDistance,
-    //       spherical: true,
-    //     },
-    //   },
-    //   {
-    //     $match: {
-    //       role: role
-    //     }
-    //   },
-    // ]);
     const users = await User.aggregate([
-      {
-        $match: {
-          role: role
-        }
-      },
       {
         $geoNear: {
           near: {
@@ -142,10 +147,15 @@ const findNearbyUsers = async (coordinates, maxDistance, role) => {
             coordinates,
           },
           distanceField: 'distance',
-          maxDistance,
+          maxDistance, // Make sure this is in meters
           spherical: true,
         },
-      }
+      },
+      {
+        $match: {
+          role: role,
+        },
+      },
     ]);
 
     return users;
@@ -154,6 +164,7 @@ const findNearbyUsers = async (coordinates, maxDistance, role) => {
     throw error;
   }
 };
+
 
 
 

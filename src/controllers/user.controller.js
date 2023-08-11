@@ -155,6 +155,26 @@ const calculateDistance = catchAsync(async (req, res) => {
   }
 });
 
+// const findNearbyUsers = async (req, res) => {
+//   try {
+//     const { latitude, longitude, maxDistance, role } = req.params;
+//     const coordinates = [parseFloat(longitude), parseFloat(latitude)];
+
+//     const users = await userService.findNearbyUsers(
+//       coordinates,
+//       parseFloat(maxDistance),
+//       role
+//     );
+
+//     res.json(users);
+//   } catch (error) {
+//     console.error('Error fetching nearby users:', error); // Log the detailed error
+//     res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
+//   }
+// };
+
+
+
 const findNearbyUsers = async (req, res) => {
   try {
     const { latitude, longitude, maxDistance, role } = req.params;
@@ -162,16 +182,17 @@ const findNearbyUsers = async (req, res) => {
 
     const users = await userService.findNearbyUsers(
       coordinates,
-      parseFloat(maxDistance),
+      parseFloat(maxDistance), // Make sure to pass distance in meters
       role
     );
 
     res.json(users);
   } catch (error) {
-    console.error('Error fetching nearby users:', error); // Log the detailed error
+    console.error('Error fetching nearby users:', error);
     res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
   }
 };
+
 
 
 module.exports = {

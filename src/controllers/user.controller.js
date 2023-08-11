@@ -173,37 +173,6 @@ const findNearbyUsers = async (req, res) => {
   }
 };
 
-const findNearbyRiders = async (req, res) => {
-  try {
-    const currentUser = req.user; // Assuming the authenticated user is making the request
-    const nearbyRiders = await userService.findNearbyUsers(currentUser.location.coordinates, 'rider');
-    res.status(200).json(nearbyRiders);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-const findNearbyRetailers = async (req, res) => {
-  try {
-    const currentUser = req.user;
-    const nearbyRetailers = await userService.findNearbyUsers(currentUser.location.coordinates, 'retailer');
-    res.status(200).json(nearbyRetailers);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-const findNearbyCustomers = async (req, res) => {
-  try {
-    const currentUser = req.user;
-    const nearbyCustomers = await userService.findNearbyUsers(currentUser.location.coordinates, 'customer');
-    res.status(200).json(nearbyCustomers);
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
-};
-
-
 
 module.exports = {
   createUser,
@@ -216,7 +185,4 @@ module.exports = {
   getUsersByRole,
   calculateDistance,
   findNearbyUsers,
-  findNearbyRiders,
-  findNearbyRetailers,
-  findNearbyCustomers
 };

@@ -111,7 +111,30 @@ const getUsersByRole = async (role) => {
 
 const findNearbyUsers = async (coordinates, maxDistance, role) => {
   try {
+    // const users = await User.aggregate([
+    //   {
+    //     $geoNear: {
+    //       near: {
+    //         type: 'Point',
+    //         coordinates,
+    //       },
+    //       distanceField: 'distance',
+    //       maxDistance,
+    //       spherical: true,
+    //     },
+    //   },
+    //   {
+    //     $match: {
+    //       role: role
+    //     }
+    //   },
+    // ]);
     const users = await User.aggregate([
+      {
+        $match: {
+          role: role
+        }
+      },
       {
         $geoNear: {
           near: {
@@ -122,12 +145,7 @@ const findNearbyUsers = async (coordinates, maxDistance, role) => {
           maxDistance,
           spherical: true,
         },
-      },
-      {
-        $match: {
-          role: role
-        }
-      },
+      }
     ]);
 
     return users;

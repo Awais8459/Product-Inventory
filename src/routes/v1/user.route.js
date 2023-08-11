@@ -32,9 +32,9 @@ router
 router.route('/:role/:latitude/:longitude/:maxDistance/').get(userController.findNearbyUsers);
   
 
-  router.get('/nearby-riders', userController.findNearbyRiders);
-  router.get('/nearby-retailers', userController.findNearbyRetailers);
-  router.get('/nearby-customers',  userController.findNearbyCustomers);
+  // router.get('/nearby-riders', userController.findNearbyRiders);
+  // router.get('/nearby-retailers', userController.findNearbyRetailers);
+  // router.get('/nearby-customers',  userController.findNearbyCustomers);
 
   router.get('/')
 

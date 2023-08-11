@@ -3,7 +3,6 @@ const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
 const userValidation = require('../../validations/user.validation');
 const userController = require('../../controllers/user.controller');
-
 const router = express.Router();
 
 router
@@ -13,8 +12,6 @@ router
   // .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers)
   .get(userController.getUsers)
 
-  router.route('/:role').get(userController.getUsersByRole);
-
   router.route('/singleuser/:userId').get(userController.getUserById);
 
 router
@@ -23,12 +20,10 @@ router
   // .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
   .delete(userController.deleteUser);
 
-  
-  router.get('/:role/locations', userController.getUserLocationsByRole);
-  router.get('/:role/:userId/location', userController.getUserLocationByRoleAndUserId);
-
-  router.route('/role/calculate-distance').get(userController.calculateDistance);
-
+router.route('/:role').get(userController.getUsersByRole);
+router.get('/:role/locations', userController.getUserLocationsByRole);
+router.get('/:role/:userId/location', userController.getUserLocationByRoleAndUserId);
+router.route('/role/calculate-distance').get(userController.calculateDistance);
 router.route('/:role/:latitude/:longitude/:maxDistance/').get(userController.findNearbyUsers);
   
 

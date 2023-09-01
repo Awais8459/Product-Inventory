@@ -7,12 +7,31 @@ const ApiError = require('../utils/ApiError');
  * @param {Object} userBody
  * @returns {Promise<User>}
  */
+// const createUser = async (userBody) => {
+//   if (await User.isEmailTaken(userBody.email)) {
+//     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
+//   }
+//   return User.create(userBody);
+// };
+
 const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  return User.create(userBody);
+
+  const newUserBody = {
+    ...userBody,
+    location: {
+      type: 'Point',
+      coordinates: userBody.coordinates,
+    },
+  };
+
+  return User.create(newUserBody);
 };
+
+
+
 
 /**
  * Query for users

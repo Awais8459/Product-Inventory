@@ -7,10 +7,10 @@ const router = express.Router();
 
 router
   .route('/')
-  // .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
-  .post(userController.createUser)
-  // .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers)
-  .get(userController.getUsers)
+  .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
+  // .post(userController.createUser)
+  .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers)
+  // .get(userController.getUsers)
 
   router.route('/singleuser/:userId').get(userController.getUserById);
 

@@ -2,14 +2,6 @@ const Joi = require('joi');
 const { password } = require('./custom.validation');
 const {Roles} = require('../config/roles')
 
-// const register = {
-//   body: Joi.object().keys({
-//     email: Joi.string().required().email(),
-//     password: Joi.string().required().custom(password),
-//     name: Joi.string().required(),
-//   }),
-// };
-
 const register = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -17,6 +9,7 @@ const register = {
     name: Joi.string().required(),
     phoneNumber: Joi.string().required(),
     coordinates: Joi.array().items(Joi.number()).required(),
+    role: Joi.string().required()
   }),
 };
 

@@ -10,7 +10,7 @@ router
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   // .post(userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers)
-  // .get(userController.getUsers)
+  .get(userController.getUsers)
 
   router.route('/singleuser/:userId').get(userController.getUserById);
 
@@ -25,6 +25,9 @@ router.get('/:role/locations', userController.getUserLocationsByRole);
 router.get('/:role/:userId/location', userController.getUserLocationByRoleAndUserId);
 router.route('/role/calculate-distance').get(userController.calculateDistance);
 router.route('/:role/:latitude/:longitude/:maxDistance/').get(userController.findNearbyUsers);
+
+
+
 
   router.get('/')
 

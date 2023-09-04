@@ -18,7 +18,6 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-
   const newUserBody = {
     ...userBody,
     location: {

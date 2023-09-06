@@ -17,7 +17,7 @@ router.route('/singleuser/:userId').get(userController.getUserById);
 router
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
 router
-  .route('/delete/:userId')
+  .route('/:userId')
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
 router.route('/delete/:userId').delete(userController.deleteUser)

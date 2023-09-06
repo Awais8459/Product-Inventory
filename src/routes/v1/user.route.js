@@ -10,18 +10,18 @@ router
   .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
   .put(userController.createUser)
   .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers)
-  // .get(userController.getUsers)
 
-  router.route('/singleuser/:userId').get(userController.getUserById);
+router.route('/singleuser/:userId').get(userController.getUserById);
+// router.route('/').get(userController.getUsers)
 
 router
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
-  // .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
-
-  router.route('/delete/:userId').delete(userController.deleteUser)
-  router
+router
   .route('/delete/:userId')
   .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+
+router.route('/delete/:userId').delete(userController.deleteUser)
+
 
 
 router.route('/:role').get(userController.getUsersByRole);
@@ -33,7 +33,7 @@ router.route('/:role/:latitude/:longitude/:maxDistance/').get(userController.fin
 
 
 
-  router.get('/')
+router.get('/')
 
 
 module.exports = router;

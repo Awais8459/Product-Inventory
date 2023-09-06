@@ -60,7 +60,7 @@ module.exports = {
   login,
   logout,
   refreshTokens,
-  forgotPassword,
-  resetPassword,
-  verifyEmail,
+  forgotPassword,//
+  resetPassword,//
+  verifyEmail,//
 };

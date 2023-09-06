@@ -17,8 +17,11 @@ router
 router
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
   // .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
-  .delete(userController.deleteUser);
 
+  router.route('/delete/:userId').delete(userController.deleteUser)
+  router
+  .route('/delete/:userId')
+  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
 
 
 router.route('/:role').get(userController.getUsersByRole);

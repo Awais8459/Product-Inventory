@@ -42,7 +42,7 @@ const defaultRoutes = [
     route: deliveryRoutes
   },
   {
-    path:'/video-downloader',
+    path:'/video',
     route: videoRoutes
   }
  

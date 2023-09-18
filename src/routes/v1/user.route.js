@@ -18,7 +18,8 @@ router
   .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
 router
   .route('/:userId')
-  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser)
+  .patch(userController.updateUser);
 
 router.route('/delete/:userId').delete(userController.deleteUser)
 

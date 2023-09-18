@@ -6,4 +6,4 @@ module.exports.productService = require('./product.service');
 module.exports.folderService = require('./folder.service')
 module.exports.imageService = require('./image.service')
 module.exports.uploadService = require('./upload.service')
-module.exports.deliveryService = require('./delivery.service')
+module.exports.videoService = require('./video.service')

@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
-const { roles } = require('../config/roles');
 const {category} = require('../config/category')
 
 const userSchema = mongoose.Schema(
@@ -27,11 +24,6 @@ const userSchema = mongoose.Schema(
         required: true,
         trim: true,
       },
-    // sku: {
-    //     type: String,
-    //     required: true,
-    //     trim: true,
-    //   },
       category: {
         type: String,
         required: true,

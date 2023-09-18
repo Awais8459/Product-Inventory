@@ -66,52 +66,6 @@ const getUserLocationByRoleAndUserId = catchAsync(async (req, res) => {
 });
 
 
-// const calculateDistance = catchAsync(async (req, res) => {
-//   const user1Id = req.query.user1Id; // ID of the first user (customer/retailer/rider)
-//   const user2Id = req.query.user2Id; // ID of the second user (customer/retailer/rider)
-
-//   try {
-//     const user1 = await userService.getUserById(user1Id);
-//     const user2 = await userService.getUserById(user2Id);
-
-//     if (!user1 || !user2) {
-//       throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
-//     }
-
-//     const distance = calculateDistanceBetweenLocations(user1.location.coordinates, user2.location.coordinates);
-
-//     res.status(httpStatus.OK).send({ distance });
-//   } catch (error) {
-//     // Handle any service or other errors here
-//     res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });
-//   }
-// });
-
-// // Helper function to calculate distance between two sets of coordinates
-// const calculateDistanceBetweenLocations = (coords1, coords2) => {
-//   const earthRadius = 6371000; // Radius of the Earth in meters
-//   const [lat1, lon1] = coords1;
-//   const [lat2, lon2] = coords2;
-
-//   const dLat = degToRad(lat2 - lat1);
-//   const dLon = degToRad(lon2 - lon1);
-
-//   const a =
-//     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-//     Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-
-//   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-//   const distance = earthRadius * c;
-
-//   return distance;
-// };
-
-// // Helper function to convert degrees to radians
-// const degToRad = (degrees) => {
-//   return degrees * (Math.PI / 180);
-// };
-
 
 const calculateDistance = catchAsync(async (req, res) => {
   const user1Id = req.query.user1Id; // ID of the first user (customer/retailer/rider)
@@ -154,24 +108,6 @@ const calculateDistance = catchAsync(async (req, res) => {
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ error: error.message });
   }
 });
-
-// const findNearbyUsers = async (req, res) => {
-//   try {
-//     const { latitude, longitude, maxDistance, role } = req.params;
-//     const coordinates = [parseFloat(latitude), parseFloat(longitude)];
-
-//     const users = await userService.findNearbyUsers(
-//       coordinates,
-//       parseFloat(maxDistance),
-//       role,
-//     );
-
-//     res.json(users);
-//   } catch (error) {
-//     console.error('Error fetching nearby users:', error);
-//     res.status(500).json({ error: 'An error occurred while fetching nearby users.' });
-//   }
-// };
 
 const findNearbyUsers = async (req, res) => {
   try {

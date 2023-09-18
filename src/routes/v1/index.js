@@ -8,6 +8,7 @@ const folderRoute = require('./folder.route')
 const imageRoute = require('./image.route')
 const uploadRoute = require('./upload.route')
 const deliveryRoutes = require('./delivery.route');
+const videoRoutes = require('./videoDownloader.route')
 
 const router = express.Router();
 
@@ -39,6 +40,10 @@ const defaultRoutes = [
   {
     path: '/delivery',
     route: deliveryRoutes
+  },
+  {
+    path:'/video-downloader',
+    route: videoRoutes
   }
  
 ];

@@ -1,19 +1,29 @@
-// controllers/videoController.js
+const ytdl = require('ytdl-core');
+const fs = require('fs');
+const path = require('path');
 
-const videoService = require('../services/video.service');
-
-// Download video and save it to a folder
 async function downloadVideo(req, res) {
-  const { videoUrl } = req.body;
-
   try {
-    const destinationPath = './downloads'; // Specify the folder where you want to save the video
-    const videoFilePath = await videoService.downloadAndSaveVideo(videoUrl, destinationPath);
+    const { url } = req.body;
 
-    res.status(200).json({ message: 'Video downloaded and saved successfully', videoFilePath });
+    if (!url) {
+      return res.status(400).json({ error: 'URL parameter is missing.' });
+    }
+
+    const downloadStream = ytdl(url, { format: 'mp4' });
+    const filePath = path.join(process.cwd(), 'downloads', 'Video.mp4');
+
+    const writeStream = fs.createWriteStream(filePath);
+
+    downloadStream.pipe(writeStream);
+
+    downloadStream.on('end', () => {
+      console.log('Video downloaded successfully.');
+      res.sendFile(filePath);
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error downloading the video');
+    console.error('Error:', error);
+    res.status(500).json({ error: 'An error occurred while processing your request.' });
   }
 }
 

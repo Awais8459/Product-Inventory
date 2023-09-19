@@ -1,10 +1,12 @@
 const express = require('express');
-const cors = require('cors');
-
-const { downloadVideo } = require('../../controllers/video.controller');
 const router = express.Router();
-router.use(cors());
+const path = require('path');
+const downloadController = require('../../controllers/video.controller'); // Replace with the correct path
 
-router.get('/download', downloadVideo);
+// Serve files from the 'downloads' folder
+router.use('/downloads', express.static(path.join(__dirname, '../../../downloads')));
+
+// Define a route for downloading YouTube videos
+router.post('/download', downloadController.downloadVideo);
 
 module.exports = router;

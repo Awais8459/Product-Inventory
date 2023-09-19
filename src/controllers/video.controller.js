@@ -19,7 +19,8 @@ async function downloadVideo(req, res) {
 
     downloadStream.on('end', () => {
       console.log('Video downloaded successfully.');
-      res.sendFile(filePath);
+      // res.sendFile(filePath);
+      res.status(200).json({ message: 'Video downloaded successfully.' });
     });
   } catch (error) {
     console.error('Error:', error);
